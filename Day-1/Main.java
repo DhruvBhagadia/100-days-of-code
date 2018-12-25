@@ -129,12 +129,52 @@ class LinkedList {
 		}
 	}
 
+	int getNo(int count){
+		int product = 1;
+		while(count-- != 0)
+			product = product*10;
+		return product;
+	}
+
+	void add1ToList() {
+
+		/* https://www.geeksforgeeks.org/add-1-number-represented-linked-list/
+			LOGIC:
+			1. Get the sum of all digits present in LinkedList || Suppose linkedlist is 1->9->9->9
+				then the sum will be 1999
+			2. Add 1 to sum
+			3. To get the MSB sum/(10^(count-1)) || eg. 2000/(10^(4-1)) = 2000/(10^3) = 2000/1000 = 2
+			4. Change elements in the linkedList to the answer that we get 
+		*/
+
+		int sum=0;
+		int count=0;
+		Node current = this.root;
+		while(current != null){
+			sum = sum*10 + current.data;
+			current = current.next;
+			count++;
+		}
+		int number_of_digits = count;
+		sum += 1;
+		count--; 
+		current = this.root;
+		while(number_of_digits-- != 0){
+			int ans = getNo(count);
+			count--;
+			int digit = sum/ans;
+			current.data = digit;
+			current = current.next;
+			sum = sum-(digit*ans);
+		}
+	}
+
 }
 
 class Main {
 	public static void main(String args[]) {
 		LinkedList ll = new LinkedList();
-		int[] arr = {11, 11, 11, 23, 23, 44, 55, 55, 55, 55, 66, 77, 88, 88};
+		int[] arr = {};
 		for (int i=0; i<arr.length; i++) {
 			ll.insert(arr[i]);
 		}
@@ -145,8 +185,8 @@ class Main {
 		// }
 
 		//ll.removeNodesWhoseSumIsZero();
-
 		//ll.removeDuplicates();
+		ll.add1ToList();
 
 		ll.display();
 	}
