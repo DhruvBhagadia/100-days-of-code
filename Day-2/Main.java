@@ -67,7 +67,6 @@ class LinkedList {
 		if(this.root == null)
 			return -1;
 		else if(this.root.next == null){
-			//System.out.println(this.root.data);
 			return this.root.data;
 		}	
 		Node slow = this.root;
@@ -83,10 +82,8 @@ class LinkedList {
 			}
 		}
 		if (even) {
-			//System.out.println(slow.next.data);
 			return slow.next.data;
 		}
-		//System.out.println(slow.data);
 		return slow.data;
 	}
 	
@@ -100,7 +97,6 @@ class LinkedList {
 			Stack<Integer> stack = new Stack<Integer>();
 			while(true){
 				if(list == null){
-					//System.out.println("aaivo");
 					current = current.next;
 					break;
 				}
@@ -181,6 +177,18 @@ class LinkedList {
 
 	void reverseContinuouslyForAGivenRange(int k) {
 		//https://practice.geeksforgeeks.org/problems/reverse-a-linked-list-in-groups-of-given-size/1
+		
+		/*
+		LOGIC:
+			1->2->3->4->5->6: For the range 2, the no.of iterations will be 6/2=3
+			Iteration 1: 2->1->3->4->5->6
+			Iteration 2: 2->1->4->3->5->6
+			Iteration 3: 2->1->4->3->6->5
+			However, for 1->2->3->4->5: For range 3, the no.of iterations will be 5/3=1
+			for the remaining 2 elements we first count how many elements are there and 
+			reverse only that many elements 
+		*/
+
 		int count = getCount();
 		boolean proper = count%k==0 ? true : false;
 		int iterations = count/k;
@@ -244,19 +252,50 @@ class LinkedList {
 		this.root = temp;
 	}
 
+	void alternateReversal(int k){
+		//https://www.geeksforgeeks.org/reverse-alternate-k-nodes-in-a-singly-linked-list/
 
+		/*
+		LOGIC:
+			same as reverseContinuouslyForAGivenRange() However only for even times do we reverse
+		*/
+		int i=0;
+		int count = getCount();
+		boolean proper = count%k==0 ? true : false;
+		int iterations = count/k;
+		Node current = this.root;
+		Node prev = null;
+		while(iterations-- != 0){
+			if (i++%2 == 0) 
+				reverse(current, k);
+			int temp=k;
+			while(current != null && temp-- != 0){
+				prev = current;
+				current = current.next;
+			}
+		}
+		if(!proper){
+			int count2 = 0;
+			Node temp = current;
+			while(temp != null){
+				count2++;
+				temp = temp.next;
+			}
+			reverse(current, count2);
+		}
+	}
 
 }
 
 class Main {
 	public static void main(String args[]) {
 		LinkedList ll = new LinkedList();
-		int[] arr = {1, 2, 3, 4, 5 ,6};
+		int[] arr = {1, 2, 3, 4, 5 ,6, 7, 8, 9, 10};
 		for (int i=0; i<arr.length; i++) {
 			ll.insert(arr[i]);
 		}
 
-		ll.reverseContinuouslyForAGivenRange(5);
+		ll.alternateReversal(4);
 
 		ll.display();
 	}
