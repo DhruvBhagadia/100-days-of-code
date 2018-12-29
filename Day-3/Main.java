@@ -56,6 +56,36 @@ class LinkedList {
 		}
 		this.root = prev;
 	}
+
+	void createLoop(){
+		//dummy function to create a loop to test hasLoop()
+		Node current = this.root;
+		Node prev = null;
+		Node successor = current.next;
+		while(successor != null){
+			prev = current;
+			current = successor;
+			successor = current.next;
+		}
+		Node new_node = new Node(100);
+		new_node.next = prev;
+		current.next = new_node;
+	}
+
+	Boolean hasLoop(){
+		//Check if any node present to next of a particular node is already visited or not
+		List list = new ArrayList();
+		Node current = this.root;
+		list.add(current);
+		while(current != null && list.indexOf(current.next) == -1){
+			current = current.next;
+			list.add(current);
+		}
+		if (current != null && list.indexOf(current.next) != -1) {
+			return true;
+		}
+		return false;
+	}
 }
 
 class Main {
@@ -65,7 +95,11 @@ class Main {
 		for (int i=0; i<arr.length; i++) {
 			ll.insert(arr[i]);
 		}
-		ll.reverse();
-		ll.display();
+		ll.createLoop();
+		if(ll.hasLoop())
+			System.out.println("true");
+		else
+			System.out.println("false");
+		//ll.display();
 	}
 }
