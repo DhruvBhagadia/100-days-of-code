@@ -15,6 +15,20 @@ class LinkedList {
 		this.root = null;
 	}
 	
+	void delete(Node node){
+		Node prev = null;
+		Node current = this.root;
+		while(current != null && current != node){
+			prev = current;
+			current = current.next;
+		}
+		if(current == this.root){
+			this.root = current.next;
+			return;
+		}
+		prev.next = current.next;
+	}
+
 	void insert(int data){
 		Node new_node = new Node(data);
 		Node prev = null;
@@ -63,6 +77,8 @@ class LinkedList {
 	}
 
 	Boolean isPalindrome(){
+		//https://www.geeksforgeeks.org/function-to-check-if-a-singly-linked-list-is-palindrome/
+
 		int itr=0;
 		Node current = this.root;
 		int count = getCount();
@@ -84,19 +100,31 @@ class LinkedList {
 		return true;
 	}
 
+	void deleteLastOccurrence(int valueToBeDeleted) {
+		//http://quiz.geeksforgeeks.org/delete-last-occurrence-of-an-item-from-linked-list/
+
+		Node current = this.root;
+		Node nodeToBeDeleted = null;
+		while(current != null){
+			if(current.data == valueToBeDeleted)
+				nodeToBeDeleted = current;
+			current = current.next;
+		}
+		if(nodeToBeDeleted == null)
+			return;
+		delete(nodeToBeDeleted);
+	}
+
 }
 
 class Main {
 	public static void main(String args[]) {
 		LinkedList ll = new LinkedList();
-		int[] arr = {1, 2, 1};
+		int[] arr = {1, 2, 3, 1};
 		for (int i=0; i<arr.length; i++) {
 			ll.insert(arr[i]);
 		}
-		if (ll.isPalindrome())
-			System.out.println("yes");
-		else
-			System.out.println("no");
-		//ll.display();
+		ll.deleteLastOccurrence(1);
+		ll.display();
 	}
 }
