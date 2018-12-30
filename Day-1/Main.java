@@ -31,6 +31,16 @@ class LinkedList {
 		}
 	}
 
+	int getCount(){
+		Node current = this.root;
+		int count=0;
+		while(current != null){
+			count++;
+			current = current.next;
+		}
+		return count;
+	}
+
 	void display(){
 		Node current = this.root;
 		while(current != null){
@@ -169,12 +179,47 @@ class LinkedList {
 		}
 	}
 
+	void reverseContinuouslyForAGivenRange(int k) {
+		int count = getCount();
+		int iterations = count%k==0 ? count/k : (count/k+1);
+		Node current = this.root;
+		Node prev = null;
+		while(iterations-- != 0){
+			reverse(current, k);
+			int temp=k;
+			while(current != null && temp-- != 0){
+				prev = current;
+				current = current.next;
+			}
+			if (current == null)
+				break;
+		}
+	}
+
+	void reverse(Node start, int k) {
+
+		Stack<Integer> stack = new Stack<Integer>();
+		Node current = start;
+		int count = 0;
+		while(count++ != k){
+			//System.out.println("k");
+			stack.push(current.data);
+			current = current.next;
+		}
+		//System.out.println(count);
+		current = start;
+		while(count-- != 1){
+			current.data = stack.pop();
+			current = current.next;
+		}
+	}
+
 }
 
 class Main {
 	public static void main(String args[]) {
 		LinkedList ll = new LinkedList();
-		int[] arr = {};
+		int[] arr = {1, 2, 3, 4, 5 ,6};
 		for (int i=0; i<arr.length; i++) {
 			ll.insert(arr[i]);
 		}
@@ -186,7 +231,8 @@ class Main {
 
 		//ll.removeNodesWhoseSumIsZero();
 		//ll.removeDuplicates();
-		ll.add1ToList();
+		//ll.add1ToList();
+		ll.reverseContinuouslyForAGivenRange(5);
 
 		ll.display();
 	}
