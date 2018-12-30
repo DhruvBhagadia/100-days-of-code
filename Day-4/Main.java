@@ -62,16 +62,41 @@ class LinkedList {
 			System.out.println(current.data);
 	}
 
+	Boolean isPalindrome(){
+		int itr=0;
+		Node current = this.root;
+		int count = getCount();
+		if(count == 0)
+			return false;
+		int mid = count/2;
+		Stack<Integer> stack = new Stack<Integer>();
+		while(itr++ != mid){
+			stack.push(current.data);
+			current = current.next;
+		}
+		if(count%2 != 0)
+			current = current.next;
+		while(!stack.isEmpty()){
+			if(stack.pop() != current.data)
+				return false;
+			current = current.next;
+		}
+		return true;
+	}
+
 }
 
 class Main {
 	public static void main(String args[]) {
 		LinkedList ll = new LinkedList();
-		int[] arr = {1, 2, 3, 5, 6, 7, 10};
+		int[] arr = {1, 2, 1};
 		for (int i=0; i<arr.length; i++) {
 			ll.insert(arr[i]);
 		}
-		ll.nThNodeFromTheLast(6);
+		if (ll.isPalindrome())
+			System.out.println("yes");
+		else
+			System.out.println("no");
 		//ll.display();
 	}
 }
