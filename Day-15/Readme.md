@@ -1,0 +1,2 @@
+Day15 (12/1/2019): 
+1. Different neighbours(Continued drilling on the problem atleast now the code gives different neighbours for every element but the answer is not optimal :( and gives a TLE on codechef): https://www.codechef.com/JAN19B/problems/DIFNEIGH
