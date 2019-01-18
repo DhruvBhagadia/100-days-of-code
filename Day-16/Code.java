@@ -1,32 +1,36 @@
-import java.util.*;
+import java.util.*;	
 
 class Code {
 	public static int funct (int n,int k,int ans, String operator, int[] a) {
-		if(operator.equals("XOR")){
-			for(int i=0; i<k; i++) {
-				for(int j=0; j<n; j++){
-					ans = ans^a[j];
-				}
+		if(k == 0)
+            return ans;
+		else if(operator.equals("XOR")){
+			int m = a[0]^a[1];
+			for(int j=2; j<n; j++){
+				m = m^a[j];
 			}
+			if(k%2 == 0)
+				ans = ans^0;
+			else
+				ans = ans^m;
 		}
 		else if(operator.equals("AND")){
-			for(int i=0; i<k; i++) {
-				for(int j=0; j<n; j++){
-					ans = ans&a[j];
-				}
+			int m = a[0]&a[1];
+			for(int j=2; j<n; j++){
+				m = m&a[j];
 			}
+			ans = ans&m;
 		}
 		else if(operator.equals("OR")){
-			for(int i=0; i<k; i++) {
-				for(int j=0; j<n; j++){
-					ans = ans|a[j];
-				}
+			int m = a[0]|a[1];
+			for(int j=2; j<n; j++){
+				m = m|a[j];
 			}
+			ans = ans|m;
 		}
 		return ans;
 	}
-
-	public static void main(String args[]){
+	public static void main (String[] args) throws java.lang.Exception{
 		Scanner sc = new Scanner(System.in);
 		if(sc.hasNextInt()){
 			int test_cases = sc.nextInt();
@@ -43,6 +47,5 @@ class Code {
 				System.out.println(ac);
 			}
 		}
-		
 	}
 }
